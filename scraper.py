@@ -15,8 +15,9 @@ class Review():
 #takes the url to the app store and returns processed list of comments#
 #url = url from appstore#
 def scan_reviews(url):
-	#extracting app id from appstore url#
 	app_id = re.sub("((id)|\?)","",re.findall("id[\d]+\?", url)[0])
+	#link for testing purposes, will be replaced with user input / string manip later#
+	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostRecent/xml"
 	soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
 	reviews = []
 	#runs through xml and extracts information about each review#
