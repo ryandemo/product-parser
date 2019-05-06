@@ -10,6 +10,7 @@ class Review():
 		self.content = content
 		self.stars = stars
 		self.version = version
+#link for testing purposes, will be replaced with user input / string manip later#
 xml_link = "https://itunes.apple.com/us/rss/customerreviews/id=1057889290/sortBy=mostRecent/xml"
 xml_content = ""
 soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
@@ -26,6 +27,5 @@ for review in soup.find_all('entry'):
 	stars = int(review.find('im:rating').text)
 	#version no#
 	version = float(review.find('im:version').text)
-	
 	review = Review(date, title, content, stars, version)
 	reviews.append(review)
