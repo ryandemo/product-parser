@@ -4,3 +4,5 @@ env/
 *.log
 assets/*.png
 *.pyc
+venv/
+*.
