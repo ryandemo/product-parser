@@ -8,7 +8,6 @@ APP_NAME = 'Facebook'
 APP_STORE_LINK = 'https://itunes.apple.com/us/app/facebook/id284882215?mt=8&v0=WWW-NAUS-ITSTOP100-FREEAPPS&l=en&ign-mpt=uo%3D4'
 PLAY_STORE_LINK = 'https://play.google.com/store/apps/details?id=com.facebook.katana&hl=en_US'
 
-
 def main():
     apple = scan_apple_reviews(APP_STORE_LINK)
     google = [] #scan_google_reviews(PLAY_STORE_LINK)
@@ -19,6 +18,7 @@ def main():
     html = report.generate()
     with open('report.html', 'w+') as file:
         file.write(html)
+
 
 if __name__ == '__main__':
     main()
