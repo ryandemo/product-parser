@@ -1,6 +1,5 @@
 env/
-report.html
-index.html
+*.html
 *.zip
 *.log
 assets/*.png
