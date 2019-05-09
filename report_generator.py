@@ -28,7 +28,7 @@ class Report:
     def go_to_toc(self):
         with self.tag('p', id='text04'):
             with self.tag('span'):
-                self.link('Go to Top ↑', '#toc')
+                self.link('Go to Top', '#toc')
 
     def table(self, titles, rows):
         with self.tag('div', id='table02', klass='table-wrapper'):
