@@ -133,19 +133,19 @@ class Report:
             with self.tag('p', id='text03'):
                 self.bold_title_reg_text('Title', str(review.title))
                 self.bold_title_reg_text('Date', review.date)
+                self.bold_title_reg_text('App Version', review.version)
                 self.bold_title_reg_text('Marketplace', str(review.marketplace))
                 self.bold_title_reg_text('Rating', str(review.stars) + '/5')
 
                 with self.tag('span'):
                     self.text(review.content)
 
-
     def pos_reviews(self):
-        self.subhead_divider('rpr', 'Recent Most Upvoted Positive Reviews')
+        self.subhead_divider('rpr', 'Most Upvoted Positive Reviews')
         self.reviews(self.data.reviews_for_ratings(range(4, 6), 3))
 
     def neg_reviews(self):
-        self.subhead_divider('rnr', 'Recent Most Upvoted Negative Reviews')
+        self.subhead_divider('rnr', 'Most Upvoted Negative Reviews')
         self.reviews(self.data.reviews_for_ratings(range(1, 4), 3))
 
     def generate(self):
