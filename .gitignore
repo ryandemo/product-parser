@@ -1,3 +1,5 @@
 env/
 report.html
 index.html
+*.zip
+*.log
