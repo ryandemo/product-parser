@@ -19,7 +19,7 @@ def scan_apple_reviews(url):
 	app_id = re.sub("((id)|\?)","",re.findall("id[\d]+\?", url)[0])
 
 	# link for testing purposes, will be replaced with user input / string manip later
-	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostRecent/xml"
+	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostHelpful/limit=200/xml"
 	soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
 	reviews = []
 
