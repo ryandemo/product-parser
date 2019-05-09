@@ -1,4 +1,6 @@
 from datetime import datetime
+from models.reportdata import ReportData
+from models.review import Marketplace
 from yattag import Doc, indent
 import random
 
@@ -28,7 +30,7 @@ class Report:
     def go_to_toc(self):
         with self.tag('p', id='text04'):
             with self.tag('span'):
-                self.link('Go to Top', '#toc')
+                self.link('Go to Top ↑', '#toc')
 
     def table(self, titles, rows):
         with self.tag('div', id='table02', klass='table-wrapper'):
@@ -48,7 +50,7 @@ class Report:
                                         self.text(td)
 
     def head(self):
-        name = self.data['app_name']
+        name = self.data.app_name
         today_str = datetime.today().strftime('%B %d, %Y @ %I:%M %p')
         title = name + ' App Review Report'
 
@@ -66,7 +68,7 @@ class Report:
 
 
     def title(self):
-        name = self.data['app_name']
+        name = self.data.app_name
         today_str = datetime.today().strftime('%B %d, %Y at %I:%M %p')
         title = name + ' App Review Report'
 
@@ -82,11 +84,11 @@ class Report:
         with self.tag('p', id='text04'):
             with self.tag('span'):
                 with self.tag('strong'):
-                    self.link('App Store Link', self.data['app_store_link'])
+                    self.link('App Store Link', self.data.app_store_link)
             self.doc.stag('br')
             with self.tag('span'):
                 with self.tag('strong'):
-                    self.link('Play Store Link', self.data['play_store_link'])
+                    self.link('Play Store Link', self.data.play_store_link)
 
     def toc(self):
         self.subhead_divider('toc', 'Table of Contents')
@@ -109,12 +111,12 @@ class Report:
     def average_reviews(self):
         self.subhead_divider('ratings', 'Ratings')
         with self.tag('p', id='text04'):
-            self.bold_title_reg_text('Average Review', self.data['average_review'])
-            self.bold_title_reg_text('Average App Store Review', self.data['average_review_app_store'])
-            self.bold_title_reg_text('Average Play Store Review', self.data['average_review_play_store'])
+            self.bold_title_reg_text('Average Review', self.data.ratings.average_all_marketplaces())
+            for marketplace in Marketplace.all():
+                self.bold_title_reg_text('Average ' + str(marketplace) + ' Review', self.data.ratings.average(marketplace))
 
     def ratings_table(self):
-        self.table(['Ratings', 'Total', 'App Store', 'Play Store'], self.data['ratings_table'])
+        self.table(['Ratings', 'Total', 'App Store', 'Play Store'], self.data.ratings.rows())
 
     def review_sentiment(self):
         self.subhead_divider('review_sentiment', 'Review Sentiment')
@@ -136,15 +138,15 @@ class Report:
         self.comment_topics('topics_negative')
 
     def reviews(self, review_arr_name):
-        for review in self.data[review_arr_name]:
+        for review in self.data.reviews_for_marketplace(Marketplace.APP_STORE):
             with self.tag('p', id='text03'):
-                self.bold_title_reg_text('Title', review['title'])
-                self.bold_title_reg_text('Author', review['author'])
-                self.bold_title_reg_text('Marketplace', review['marketplace'])
-                self.bold_title_reg_text('Rating', review['rating'])
+                self.bold_title_reg_text('Title', str(review.title))
+                self.bold_title_reg_text('Date', review.date)
+                self.bold_title_reg_text('Marketplace', str(review.marketplace))
+                self.bold_title_reg_text('Rating', str(review.stars) + '/5')
 
                 with self.tag('span'):
-                    self.text(review['body'])
+                    self.text(review.content)
 
 
     def pos_reviews(self):
@@ -169,12 +171,12 @@ class Report:
                             self.average_reviews()
                             sections = [
                                     self.ratings_table,
-                                    self.review_sentiment,
-                                    self.comment_topics_pos,
-                                    self.comment_topics_neutral,
-                                    self.comment_topics_neg,
+                                    # self.review_sentiment,
+                                    # self.comment_topics_pos,
+                                    # self.comment_topics_neutral,
+                                    # self.comment_topics_neg,
                                     self.pos_reviews,
-                                    self.neg_reviews
+                                    # self.neg_reviews
                                 ]
 
                             for section in sections:

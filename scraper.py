@@ -1,17 +1,10 @@
 from bs4 import BeautifulSoup
+from models.review import Review, Marketplace
 import requests
 import time
 import datetime
 import re
 from selenium import webdriver
-
-class Review():
-	def __init__(self, date, title, content, stars, version):
-		self.date = date
-		self.title = title
-		self.content = content
-		self.stars = stars
-		self.version = version
 
 # takes the url to the app store and returns processed list of comments
 # url = url from appstore
@@ -19,23 +12,32 @@ def scan_apple_reviews(url):
 	app_id = re.sub("((id)|\?)","",re.findall("id[\d]+\?", url)[0])
 
 	# link for testing purposes, will be replaced with user input / string manip later
-	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostHelpful/limit=200/xml"
+	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostHelpful/limit=10/xml"
 	soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
 	reviews = []
 
 	# runs through xml and extracts information about each review
 	for review in soup.find_all('entry'):
+		id = int(review.find('id').text)
 		# converting string to timestamp
-		date = time.mktime(datetime.datetime.strptime(review.find('updated').text.split('T')[0], "%Y-%m-%d").timetuple())
+		# date = time.mktime(datetime.datetime.strptime(review.find('updated').text.split('T')[0], "%Y-%m-%d").timetuple())
+		date = review.find('updated').text
 		# title of comment
-		title = str(review.find('title').text.encode('utf-8'))
+		title = review.find('title').text
 		# content body
-		content = str(review.find('content').text.encode('utf-8'))
+		content = review.find('content').text
 		# number of review stars
 		stars = int(review.find('im:rating').text)
 		# version no
 		version = float(review.find('im:version').text)
-		review = Review(date, title, content, stars, version)
+		# number of upvotes
+		upvotes = review.find('im:voteSum')
+		if upvotes is not None:
+			upvotes = int(upvotes.text)
+		else:
+			upvotes = 0
+
+		review = Review(id, date, title, content, stars, version, upvotes, Marketplace.APP_STORE)
 		reviews.append(review)
 
 	return reviews
@@ -45,7 +47,7 @@ def scan_google_reviews(url):
 	url = url + "&showAllReviews=true"
 
 	# headless chromium to render JS on website
-	driver = webdriver.Chrome(executable_path='./chromedriver.exe')
+	driver = webdriver.Chrome(executable_path='./resources/chromedriver.exe')
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
 	options = webdriver.Chrome(chrome_options=options)
@@ -87,7 +89,7 @@ def scan_google_reviews(url):
 		title = "N/A"
 		# does not have version
 		version = -1
-		reviews.append(Review(date, title, content, stars, version))
+		reviews.append(Review(date, title, content, stars, version, Marketplace.PLAY_STORE))
 
 	return reviews
 
