@@ -1,1 +1,4 @@
 yattag==1.11.1
+selenium==3.12.0
+requests==2.18.4
+bs4==4.6.0
