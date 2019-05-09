@@ -268,11 +268,23 @@ h1 .li, h2 .li, h3 .li, p .li {
 	font-weight: 700;
 }
 
-#fct_45 br + br {
+#fct_5 br + br {
 	margin-top: 0.9rem;
 }
 
-#fct_45 {
+#fct_5 {
+	color: #878C94;
+	font-family: 'Arial', sans-serif;
+	font-size: 1.375em;
+	line-height: 1.5;
+	font-weight: 700;
+}
+
+#fct_4 br + br {
+	margin-top: 0.9rem;
+}
+
+#fct_4 {
 	color: #878C94;
 	font-family: 'Arial', sans-serif;
 	font-size: 1.375em;
@@ -292,11 +304,23 @@ h1 .li, h2 .li, h3 .li, p .li {
 	font-weight: 700;
 }
 
-#fct_12 br + br {
+#fct_2 br + br {
 	margin-top: 0.9rem;
 }
 
-#fct_12 {
+#fct_2 {
+	color: #878C94;
+	font-family: 'Arial', sans-serif;
+	font-size: 1.375em;
+	line-height: 1.5;
+	font-weight: 700;
+}
+
+#fct_1 br + br {
+	margin-top: 0.9rem;
+}
+
+#fct_1 {
 	color: #878C94;
 	font-family: 'Arial', sans-serif;
 	font-size: 1.375em;
@@ -499,144 +523,158 @@ hr:before {
 	html {
 		font-size: 11pt;
 	}
-
+	
 	#wrapper {
 		padding: 1.875rem 1.875rem 1.875rem 1.875rem;
 	}
-
+	
 	#main > .inner {
 		padding: 2.5rem 2rem;
 	}
-
+	
 	#main > .inner > * {
 		margin-top: 0.75rem;
 		margin-bottom: 0.75rem;
 	}
-
+	
 	#main > .inner > .full {
 		margin-left: calc(-2rem);
 		width: calc(100% + 4rem + 0.4725px);
 		max-width: calc(100% + 4rem + 0.4725px);
 	}
-
+	
 	#main > .inner > .full:first-child {
 		margin-top: -2.5rem !important;
 	}
-
+	
 	#main > .inner > .full:last-child {
 		margin-bottom: -2.5rem !important;
 	}
-
+	
 	#main > .inner > .full.screen {
 		margin-left: -50vw;
 	}
-
+	
 	#text02 {
 		letter-spacing: -0.065625rem;
 		width: 100%;
 		font-size: 2.25em;
 		line-height: 1.5;
 	}
-
+	
 	#text01 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.125em;
 		line-height: 1.75;
 	}
-
+	
 	#text04 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1em;
 		line-height: 1.75;
 	}
-
+	
 	#toc {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
 	#ratings {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
 	#review_sentiment {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
-	#fct_45 {
+	
+	#fct_5 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
+	#fct_4 {
+		letter-spacing: 0rem;
+		width: 100%;
+		font-size: 1.375em;
+		line-height: 1.5;
+	}
+	
 	#fct_3 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
-	#fct_12 {
+	
+	#fct_2 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
+	#fct_1 {
+		letter-spacing: 0rem;
+		width: 100%;
+		font-size: 1.375em;
+		line-height: 1.5;
+	}
+	
 	#rpr {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
 	#rnr {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1.375em;
 		line-height: 1.5;
 	}
-
+	
 	#text03 {
 		letter-spacing: 0rem;
 		width: 100%;
 		font-size: 1em;
 		line-height: 1.75;
 	}
-
+	
 	#columns01 > .inner {
 		padding: 0rem 0rem;
 	}
-
+	
 	#columns01 > .inner > * {
 		margin-top: 0.25rem;
 		margin-bottom: 0.25rem;
 	}
-
+	
 	#columns01 > .inner > .full {
 		margin-left: calc(-0rem);
 		width: calc(100% + 0rem + 0.4725px);
 	}
-
+	
 	#columns01 > .inner > .full:first-child {
 		margin-top: -0rem !important;
 	}
-
+	
 	#columns01 > .inner > .full:last-child {
 		margin-bottom: -0rem !important;
 	}
-
+	
 	#divider01 {
 		height: 0.5rem;
 		line-height: 0.5rem;
@@ -647,12 +685,12 @@ hr:before {
 	#wrapper {
 		padding: 0.875rem 0.875rem 0.875rem 0.875rem;
 	}
-
+	
 	#main > .inner > * {
 		margin-top: 0.65625rem;
 		margin-bottom: 0.65625rem;
 	}
-
+	
 	#columns01 > .inner > * {
 		margin-top: 0.21875rem;
 		margin-bottom: 0.21875rem;
@@ -663,100 +701,108 @@ hr:before {
 	#wrapper {
 		padding: 0.5rem 0.5rem 0.5rem 0.5rem;
 	}
-
+	
 	#main > .inner {
 		padding: 1.875rem 1.5rem;
 	}
-
+	
 	#main > .inner > * {
 		margin-top: 0.5625rem;
 		margin-bottom: 0.5625rem;
 	}
-
+	
 	#main > .inner > .full {
 		margin-left: calc(-1.5rem);
 		width: calc(100% + 3rem + 0.4725px);
 		max-width: calc(100% + 3rem + 0.4725px);
 	}
-
+	
 	#main > .inner > .full:first-child {
 		margin-top: -1.875rem !important;
 	}
-
+	
 	#main > .inner > .full:last-child {
 		margin-bottom: -1.875rem !important;
 	}
-
+	
 	#main > .inner > .full.screen {
 		margin-left: -50vw;
 	}
-
+	
 	#text02 {
 		font-size: 2em;
 	}
-
+	
 	#text01 {
 		font-size: 1.125em;
 	}
-
+	
 	#text04 {
 		font-size: 1em;
 	}
-
+	
 	#toc {
 		font-size: 1.375em;
 	}
-
+	
 	#ratings {
 		font-size: 1.375em;
 	}
-
+	
 	#review_sentiment {
 		font-size: 1.375em;
 	}
-
-	#fct_45 {
+	
+	#fct_5 {
 		font-size: 1.375em;
 	}
-
+	
+	#fct_4 {
+		font-size: 1.375em;
+	}
+	
 	#fct_3 {
 		font-size: 1.375em;
 	}
-
-	#fct_12 {
+	
+	#fct_2 {
 		font-size: 1.375em;
 	}
-
+	
+	#fct_1 {
+		font-size: 1.375em;
+	}
+	
 	#rpr {
 		font-size: 1.375em;
 	}
-
+	
 	#rnr {
 		font-size: 1.375em;
 	}
-
+	
 	#text03 {
 		font-size: 1em;
 	}
-
+	
 	#columns01 > .inner {
 		padding: 0rem 0rem;
 	}
-
+	
 	#columns01 > .inner > * {
 		margin-top: 0.1875rem;
 		margin-bottom: 0.1875rem;
 	}
-
+	
 	#columns01 > .inner > .full {
 		margin-left: calc(-0rem);
 		width: calc(100% + 0rem + 0.4725px);
 	}
-
+	
 	#columns01 > .inner > .full:first-child {
 		margin-top: -0rem !important;
 	}
-
+	
 	#columns01 > .inner > .full:last-child {
 		margin-bottom: -0rem !important;
 	}

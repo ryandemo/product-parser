@@ -3,12 +3,13 @@ from functools import reduce
 from .review import Marketplace
 
 class ReportData:
-    def __init__(self, app_name, app_store_link, play_store_link, analyzed_reviews):
+    def __init__(self, app_name, app_store_link, play_store_link, analyzed_reviews, common_topics):
         self.app_name = app_name
         self.app_store_link = app_store_link
         self.play_store_link = play_store_link
-        self.ratings = Ratings(analyzed_reviews)
         self.analyzed_reviews = analyzed_reviews
+        self.ratings = Ratings(analyzed_reviews)
+        self.common_topics = common_topics
 
     def reviews_for_marketplace(self, marketplace_filter):
         filtered_reviews = list()
@@ -17,6 +18,18 @@ class ReportData:
                 if marketplace_filter == marketplace:
                     filtered_reviews += reviews
         return filtered_reviews
+
+    def reviews_for_ratings(self, rating_range, limit):
+        reviews = []
+        for rating in rating_range:
+            filtered_reviews = [item for sublist in self.analyzed_reviews[rating].values() for item in sublist]
+            filtered_reviews = sorted(filtered_reviews, key=lambda x: x.upvotes, reverse=True)[:limit]
+            reviews.extend(filtered_reviews)
+
+        return sorted(reviews, key=lambda x: x.upvotes, reverse=True)[:limit]
+
+    def common_topics_rows(self, rating):
+        return self.common_topics[rating]
 
 
 class Ratings:

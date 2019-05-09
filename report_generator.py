@@ -96,9 +96,11 @@ class Report:
         toc = [
             ('Ratings', '#ratings'),
             ('Review Sentiment', '#review_sentiment'),
-            ('Frequent Comment Topics (4-5 Stars)', '#fct_45'),
+            ('Frequent Comment Topics (5 Stars)', '#fct_5'),
+            ('Frequent Comment Topics (4 Stars)', '#fct_4'),
             ('Frequent Comment Topics (3 Stars)', '#fct_3'),
-            ('Frequent Comment Topics (1-2 Stars)', '#fct_12'),
+            ('Frequent Comment Topics (2 Stars)', '#fct_2'),
+            ('Frequent Comment Topics (1 Stars)', '#fct_1'),
             ('Recent Positive Reviews', '#rpr'),
             ('Recent Negative Reviews', '#rnr')
         ]
@@ -122,23 +124,12 @@ class Report:
         self.subhead_divider('review_sentiment', 'Review Sentiment')
         self.table(['Sentiment', 'Total', 'App Store', 'Play Store'], self.data['sentiment'])
 
-    def comment_topics(self, topics_arr_name):
-        self.table(['Topic', 'Total', 'App Store', 'Play Store', 'More'], self.data[topics_arr_name])
+    def comment_topics(self, rating):
+        self.subhead_divider('fct_' + str(rating), 'Frequent Comment Topics (' + str(rating) + ' Stars)')
+        self.table(['Topic', 'Total', 'App Store', 'Play Store', 'More'], self.data.common_topics_rows(rating))
 
-    def comment_topics_pos(self):
-        self.subhead_divider('fct_45', 'Frequent Comment Topics (4-5 Stars)')
-        self.comment_topics('topics_positive')
-
-    def comment_topics_neutral(self):
-        self.subhead_divider('fct_3', 'Frequent Comment Topics (3 Stars)')
-        self.comment_topics('topics_neutral')
-
-    def comment_topics_neg(self):
-        self.subhead_divider('fct_12', 'Frequent Comment Topics (1-2 Stars)')
-        self.comment_topics('topics_negative')
-
-    def reviews(self, review_arr_name):
-        for review in self.data.reviews_for_marketplace(Marketplace.APP_STORE):
+    def reviews(self, reviews):
+        for review in reviews:
             with self.tag('p', id='text03'):
                 self.bold_title_reg_text('Title', str(review.title))
                 self.bold_title_reg_text('Date', review.date)
@@ -150,12 +141,12 @@ class Report:
 
 
     def pos_reviews(self):
-        self.subhead_divider('rpr', 'Recent Positive Reviews')
-        self.reviews('reviews')
+        self.subhead_divider('rpr', 'Recent Most Upvoted Positive Reviews')
+        self.reviews(self.data.reviews_for_ratings(range(4, 6), 3))
 
     def neg_reviews(self):
-        self.subhead_divider('rnr', 'Recent Negative Reviews')
-        self.reviews('reviews')
+        self.subhead_divider('rnr', 'Recent Most Upvoted Negative Reviews')
+        self.reviews(self.data.reviews_for_ratings(range(1, 4), 3))
 
     def generate(self):
         with self.tag('html', lang='en'):
@@ -169,17 +160,19 @@ class Report:
                             self.links()
                             self.toc()
                             self.average_reviews()
-                            sections = [
-                                    self.ratings_table,
-                                    # self.review_sentiment,
-                                    # self.comment_topics_pos,
-                                    # self.comment_topics_neutral,
-                                    # self.comment_topics_neg,
+                            self.ratings_table()
+                            self.go_to_toc()
+
+                            for rating in reversed(range(1,6)):
+                                self.comment_topics(rating)
+                                self.go_to_toc()
+
+                            additional_sections = [
                                     self.pos_reviews,
-                                    # self.neg_reviews
+                                    self.neg_reviews
                                 ]
 
-                            for section in sections:
+                            for section in additional_sections:
                                 section()
                                 self.go_to_toc()
 

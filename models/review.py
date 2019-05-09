@@ -26,4 +26,4 @@ class Review:
 		self.marketplace = marketplace
 
 	def sections(self):
-		return [self.title, self.content]
+		return [self.processed_content]
