@@ -61,10 +61,10 @@ class Report:
             self.doc.stag('meta', charset='utf-8')
             self.doc.stag('meta', name='viewport', content='width=device-width,initial-scale=1,user-scalable=no')
             self.doc.stag('meta', name='description', content=title + ' | ' + today_str)
-            self.doc.stag('link', rel='stylesheet', href='assets/main.css')
+            self.doc.stag('link', rel='stylesheet', href='static/main.css')
 
             with self.tag('noscript'):
-                self.doc.stag('link', rel='stylesheet', href='assets/noscript.css')
+                self.doc.stag('link', rel='stylesheet', href='static/noscript.css')
 
 
     def title(self):
@@ -176,7 +176,7 @@ class Report:
                                 section()
                                 self.go_to_toc()
 
-                with self.tag('script', src='assets/main.js'):
+                with self.tag('script', src='static/main.js'):
                     self.text('')
 
         return indent(self.doc.getvalue())

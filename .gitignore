@@ -1,8 +1,9 @@
 env/
-*.html
+venv/
+*.pyc
+__pycache__/
+
 *.zip
 *.log
-assets/*.png
-*.pyc
-venv/
-*.
+webservice/*.html
+webservice/static/*.png
