@@ -31,6 +31,17 @@ class ReportData:
     def common_topics_rows(self, rating):
         return self.common_topics[rating]
 
+    def reviews_for_rating_topic(self, rating, topic):
+        reviews = []
+        marketplace_instances = defaultdict(int)
+        for marketplace, marketplace_reviews in self.analyzed_reviews[rating].items():
+            for review in marketplace_reviews:
+                if topic in review.topics:
+                    reviews.append(review)
+                    marketplace_instances[marketplace] += 1
+
+        return sorted(reviews, key=lambda x: x.upvotes, reverse=True), marketplace_instances
+
 
 class Ratings:
     def __init__(self, rated_reviews):

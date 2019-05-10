@@ -24,6 +24,26 @@ stemmer = SnowballStemmer('english')
 
 ### Term-Document Matrix
 
+def compute_review_freq(review):
+    '''
+    Computes review frequency, i.e. how many reviews contain a specific phrase
+    '''
+    freq = Counter()
+    phrases = set()
+    for sec in review.sections():
+        # bigrams
+        for i in range(len(sec) - 1):
+            phrases.add(' '.join([sec[i], sec[i+1]]))
+
+        # trigrams
+        for i in range(len(sec) - 2):
+            phrases.add(' '.join([sec[i], sec[i+1], sec[i+2]]))
+
+    for phrase in phrases:
+        freq[phrase] += 1
+
+    return freq
+
 def compute_review_freqs(reviews):
     '''
     Computes review frequency, i.e. how many reviews contain a specific phrase
@@ -120,7 +140,7 @@ def process_review(review):
     review.processed_content = list(map(lambda word: word.lower(), word_tokenize(review.content)))
     review.processed_content = [word for word in review.processed_content if word not in stopwords]
     # review.processed_content = [stemmer.stem(word) for word in review.processed_content]
-    review.topics = compute_review_freqs([review])
+    review.topics = compute_review_freq(review)
 
 
 def analyze(reviews):
