@@ -4,6 +4,16 @@ from models.review import Marketplace
 from yattag import Doc, indent
 import random
 
+class InstanceLink:
+    def __init__(self, text, rating, topic):
+        self.text = text
+        self.rating = rating
+        self.topic = topic
+
+    def link(self):
+        return '/reviews?rating=' + str(self.rating) + '&topic=' + self.topic
+
+
 class Report:
     def __init__(self, data):
         self.data = data
@@ -47,7 +57,10 @@ class Report:
                             with self.tag('tr'):
                                 for td in tr:
                                     with self.tag('td'):
-                                        self.text(td)
+                                        if isinstance(td, InstanceLink):
+                                            self.link(td.text, td.link())
+                                        else:
+                                            self.text(td)
 
     def head(self):
         name = self.data.app_name
@@ -126,7 +139,11 @@ class Report:
 
     def comment_topics(self, rating):
         self.subhead_divider('fct_' + str(rating), 'Frequent Comment Topics (' + str(rating) + ' Stars)')
-        self.table(['Topic', 'Total', 'App Store', 'Play Store', 'More'], self.data.common_topics_rows(rating))
+        rows = self.data.common_topics_rows(rating)
+        for row in rows:
+            row += [InstanceLink('See instances', rating, row[0])]
+
+        self.table(['Topic', 'Total', 'App Store', 'Play Store', 'More'], rows)
 
     def reviews(self, reviews):
         for review in reviews:
