@@ -1,11 +1,9 @@
 from analyzer import analyze
 from scraper import scan_apple_reviews, scan_google_reviews
-from collections import defaultdict
 from models.reportdata import ReportData
 from gen_common_topics import CommonTopics
 from gen_report import Report
-from pprint import pprint as pp
-from flask import Flask, flash, redirect, render_template, request, url_for
+from flask import Flask, render_template, request
 
 app = Flask(__name__)
 report_data = None
