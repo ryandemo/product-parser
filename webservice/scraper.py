@@ -31,11 +31,7 @@ def scan_apple_reviews(url):
 		# version no
 		version = float(review.find('im:version').text)
 		# number of upvotes
-		upvotes = review.find('im:voteSum')
-		if upvotes is not None:
-			upvotes = int(upvotes.text)
-		else:
-			upvotes = 0
+		upvotes = int(review.find('im:votesum').text)
 
 		review = Review(id, date, title, content, stars, version, upvotes, Marketplace.APP_STORE)
 		reviews.append(review)

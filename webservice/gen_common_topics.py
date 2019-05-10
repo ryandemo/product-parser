@@ -63,6 +63,7 @@ class CommonTopics:
                 self.bold_title_reg_text('App Version', review.version)
                 self.bold_title_reg_text('Marketplace', str(review.marketplace))
                 self.bold_title_reg_text('Rating', str(review.stars) + '/5')
+                self.bold_title_reg_text('Upvotes', review.upvotes)
 
                 with self.tag('span'):
                     self.text(review.content)
