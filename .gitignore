@@ -7,3 +7,4 @@ __pycache__/
 *.log
 webservice/*.html
 webservice/static/*.png
+webservice/resources/chromedriver.exe

@@ -12,7 +12,9 @@ def scan_apple_reviews(url):
 	app_id = re.sub("((id)|\?)","",re.findall("id[\d]+\?", url)[0])
 
 	# link for testing purposes, will be replaced with user input / string manip later
-	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostHelpful/limit=200/xml"
+	#Helpful = mostHelpful#
+	#fb text link: https://itunes.apple.com/us/rss/customerreviews/id=284882215/sortBy=mostRecent/xml#
+	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostRecent/xml"
 	soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
 	reviews = []
 
@@ -43,16 +45,17 @@ def scan_google_reviews(url):
 	url = url + "&showAllReviews=true"
 
 	# headless chromium to render JS on website
-	driver = webdriver.Chrome(executable_path='./resources/chromedriver.exe')
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
-	options = webdriver.Chrome(chrome_options=options)
+	driver = webdriver.Chrome(chrome_options=options, executable_path='./resources/chromedriver.exe')
 	# getting results#
 	driver.get(url)
 	result = driver.page_source
 
 	soup = BeautifulSoup(result, "html.parser")
 	reviews = []
+	#unique id no#
+	code = 0
 	for review in soup.find_all('div', 'd15Mdf'):
 		# getting stars
 		stars = -1
@@ -78,15 +81,17 @@ def scan_google_reviews(url):
 			elif("5" in label):
 				stars = 5
 
-		date = datetime.datetime.strptime(review.find("span", "p2TkOb").get_text(), "%B %d, %Y")
+		date = review.find("span", "p2TkOb").get_text()
 		# getting content
 		content = review.find("span", jsname = "fbQN7e").get_text()
+		#getting upvotes#
+		upvotes = int(review.find("div", "jUL89d").get_text())
 		# play does not have titles
 		title = "N/A"
 		# does not have version
 		version = -1
-		reviews.append(Review(date, title, content, stars, version, Marketplace.PLAY_STORE))
-
+		reviews.append(Review(code, date, title, content, stars, version, upvotes, Marketplace.PLAY_STORE))
+		code += 1
 	return reviews
 
 

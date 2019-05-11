@@ -23,8 +23,8 @@ def report():
     # TODO: param checking
 
     apple = scan_apple_reviews(apple_link)
-    # google = scan_google_reviews(google_link)
-    reviews = apple# + google
+    google = scan_google_reviews(google_link)
+    reviews = apple + google
     rated_reviews, common_topics = analyze(reviews)
     report_data = ReportData(app_name, apple_link, google_link, rated_reviews, common_topics)
     report = Report(report_data)
