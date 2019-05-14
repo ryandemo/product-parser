@@ -2,6 +2,8 @@ from collections import defaultdict
 from functools import reduce
 from .review import Marketplace
 
+import numpy as np
+
 class ReportData:
     def __init__(self, app_name, app_store_link, play_store_link, analyzed_reviews, common_topics):
         self.app_name = app_name
@@ -73,7 +75,7 @@ class Ratings:
 
     def average(self, marketplace):
         total_stars, total_possible = self.total_marketplace(marketplace)
-        return float(total_stars)/float(total_possible if total_possible > 0 else 1) * 5
+        return round(float(total_stars)/float(total_possible if total_possible > 0 else 1) * 5, 2)
 
     def average_all_marketplaces(self):
         total_stars = 0
@@ -82,7 +84,7 @@ class Ratings:
             stars, possible = self.total_marketplace(marketplace)
             total_stars += stars
             total_possible += possible
-        return float(total_stars)/float(total_possible if total_possible > 0 else 1) * 5
+        return round(float(total_stars)/float(total_possible if total_possible > 0 else 1) * 5, 2)
 
     def describe_rating_count(self, rating, marketplace):
         _, total_marketplace = self.total_marketplace(marketplace)
