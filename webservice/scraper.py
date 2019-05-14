@@ -4,6 +4,7 @@ import requests
 import time
 import datetime
 import re
+import platform
 from selenium import webdriver
 
 # takes the url to the app store and returns processed list of comments
@@ -47,7 +48,17 @@ def scan_google_reviews(url):
 	# headless chromium to render JS on website
 	options = webdriver.ChromeOptions()
 	options.add_argument('headless')
-	driver = webdriver.Chrome(chrome_options=options, executable_path='./resources/chromedriver.exe')
+
+	driver_path = None
+	system = platform.system()
+	if system == 'Windows':
+		driver_path = './resources/chromedriver.exe'
+	elif system == 'Darwin':
+		driver_path = './resources/chromedriver-mac'
+	else:
+		driver_path = './resources/chromedriver-linux'
+
+	driver = webdriver.Chrome(chrome_options=options, executable_path=driver_path)
 	# getting results#
 	driver.get(url)
 	result = driver.page_source
@@ -61,7 +72,6 @@ def scan_google_reviews(url):
 		stars = -1
 		content = ""
 		title = ""
-		version = -1
 		date = ""
 
 		for div in review.findChildren("div", recursive = True):
@@ -87,9 +97,9 @@ def scan_google_reviews(url):
 		#getting upvotes#
 		upvotes = int(review.find("div", "jUL89d").get_text())
 		# play does not have titles
-		title = "N/A"
-		# does not have version
-		version = -1
+		title = 'N/A'
+		version = 'N/A'
+
 		reviews.append(Review(code, date, title, content, stars, version, upvotes, Marketplace.PLAY_STORE))
 		code += 1
 	return reviews

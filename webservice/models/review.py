@@ -12,7 +12,7 @@ class Marketplace(Enum):
 
 	@classmethod
 	def all(cls):
-		return [Marketplace.APP_STORE]#, Marketplace.PLAY_STORE]
+		return [Marketplace.APP_STORE, Marketplace.PLAY_STORE]
 
 class Review:
 	def __init__(self, id, date, title, content, stars, version, upvotes, marketplace):
