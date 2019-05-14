@@ -6,7 +6,7 @@ Ryan Demo and Eyan Goldman
 
 Final Project: Product Review Parser
 
-##### Description
+#### Description
 An intelligent product dashboard for mobile-oriented product managers to see aggregated ratings and common topic breakdowns from customer reviews on the Apple App Store and Google Play Store.
 
 ## Usage
