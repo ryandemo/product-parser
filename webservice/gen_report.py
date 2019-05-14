@@ -3,15 +3,27 @@ from models.reportdata import ReportData
 from models.review import Marketplace
 from yattag import Doc, indent
 import random
+import urllib.parse
 
 class InstanceLink:
-    def __init__(self, text, rating, topic):
+    def __init__(self, text, rating, topic, data):
         self.text = text
         self.rating = rating
         self.topic = topic
+        self.app_name = data.app_name
+        self.app_store_link = data.app_store_link
+        self.play_store_link = data.play_store_link
 
     def link(self):
-        return '/reviews?rating=' + str(self.rating) + '&topic=' + self.topic
+        params = {
+            'rating': self.rating,
+            'topic': self.topic,
+            'app-name': self.app_name,
+            'app-store-link': self.app_store_link,
+            'play-store-link': self.play_store_link
+        }
+        query_params = urllib.parse.urlencode(params)
+        return '/reviews?' + query_params
 
 
 class Report:
@@ -141,7 +153,7 @@ class Report:
         self.subhead_divider('fct_' + str(rating), 'Frequent Comment Topics (' + str(rating) + ' Stars)')
         rows = self.data.common_topics_rows(rating)
         for row in rows:
-            row += [InstanceLink('See instances', rating, row[0])]
+            row += [InstanceLink('See instances', rating, row[0], self.data)]
 
         self.table(['Topic', 'Total', 'App Store', 'Play Store', 'More'], rows)
 

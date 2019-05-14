@@ -8,6 +8,22 @@ from flask import Flask, render_template, request
 app = Flask(__name__)
 report_data = None
 
+def generate_report(args):
+    global report_data
+
+    app_name = args.get('app-name')
+    apple_link = args.get('app-store-link')
+    google_link = args.get('play-store-link')
+
+    if report_data and report_data.app_name == app_name:
+        return
+
+    apple = scan_apple_reviews(apple_link)
+    google = scan_google_reviews(google_link)
+    reviews = apple + google
+    rated_reviews, common_topics = analyze(reviews)
+    report_data = ReportData(app_name, apple_link, google_link, rated_reviews, common_topics)
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -15,18 +31,8 @@ def index():
 @app.route('/report')
 def report():
     global report_data
+    generate_report(request.args)
 
-    app_name = request.args.get('app-name')
-    apple_link = request.args.get('app-store-link')
-    google_link = request.args.get('play-store-link')
-
-    # TODO: param checking
-
-    apple = scan_apple_reviews(apple_link)
-    google = scan_google_reviews(google_link)
-    reviews = apple + google
-    rated_reviews, common_topics = analyze(reviews)
-    report_data = ReportData(app_name, apple_link, google_link, rated_reviews, common_topics)
     report = Report(report_data)
     html = report.generate()
     return html
@@ -34,6 +40,7 @@ def report():
 @app.route('/reviews')
 def list_reviews():
     global report_data
+    generate_report(request.args)
 
     rating = int(request.args.get('rating'))
     topic = request.args.get('topic')
