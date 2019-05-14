@@ -32,7 +32,7 @@ def scan_apple_reviews(url):
 		# number of review stars
 		stars = int(review.find('im:rating').text)
 		# version no
-		version = float(review.find('im:version').text)
+		version = review.find('im:version').text
 		# number of upvotes
 		upvotes = int(review.find('im:votesum').text)
 
