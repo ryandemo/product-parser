@@ -16,7 +16,7 @@ def scan_apple_reviews(url):
 	#Helpful = mostHelpful#
 	#fb text link: https://itunes.apple.com/us/rss/customerreviews/id=284882215/sortBy=mostRecent/xml#
 	xml_link = "https://itunes.apple.com/us/rss/customerreviews/id="+app_id+"/sortBy=mostRecent/xml"
-	soup = BeautifulSoup(requests.get(xml_link).text, "lxml")
+	soup = BeautifulSoup(requests.get(xml_link).content, "lxml")
 	reviews = []
 
 	# runs through xml and extracts information about each review
