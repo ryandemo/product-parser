@@ -22,7 +22,7 @@ An intelligent product dashboard for mobile-oriented product managers to see agg
 2. Create a virtualenv: `$ virtualenv venv`
 
 #### Run the webserver
-1. Activate virtualenv: `$ source venv/bin/activate`
+1. Activate virtualenv: `$ source venv/bin/activate` on Mac or Linux, or `$ source venv/Scripts/activate`
 2. Install dependencies: `$ pip install -r requirements.txt`
 3. Change to webservice directory: `$ cd webservice`
 4. Run app: `$ python app.py`
