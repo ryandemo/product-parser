@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 from analyzer import analyze
 from scraper import scan_apple_reviews, scan_google_reviews
 from models.reportdata import ReportData
